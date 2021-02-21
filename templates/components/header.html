@@ -1,0 +1,19 @@
+<header>
+  <nav class="navbar navbar-expand-md navbar-light bg-light">
+    <a class="navbar-brand" href="#">FAKE CSV</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+            aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-link active" href="#">Schemas <span class="sr-only"></span></a>
+      </div>
+
+    </div>
+    <span class="navbar-text mr-2">
+        Hello, {{ request.user.username }}
+    </span>
+    <a class="btn btn-outline-secondary" href="#">Logout</a>
+  </nav>
+</header>

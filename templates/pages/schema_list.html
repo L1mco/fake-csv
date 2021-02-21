@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col">
+        <h3>Data schemas</h3>
+      </div>
+      <div class="col d-flex justify-content-end">
+        <a class="btn btn-outline-success" href="#">New Schema</a>
+      </div>
+    </div>
+    <div class="row mt-2">
+      <table class="table table-bordered">
+        <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Title</th>
+          <th scope="col">Modified</th>
+          <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for schema in schemas %}
+          <tr>
+            <th scope="row" class="schemas-table-row-number"></th>
+            <td><a href="#">{{ schema.title }}</a></td>
+            <td>{{ schema.format_modified_date }}</td>
+            <td class="d-flex justify-content-around">
+              <button class="btn btn-link" data-schema-id="{{ schema.id }}">
+                Edit scheme
+              </button>
+              <button class="btn btn-link text-danger" data-schema-id="{{ schema.id }}">
+                Delete
+              </button>
+            </td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    let tableRows = document.querySelectorAll('.schemas-table-row-number');
+    let index = 1
+    for (let row of tableRows) {
+      row.textContent = `${index}`
+      index++
+    }
+  </script>
+
+{% endblock %}

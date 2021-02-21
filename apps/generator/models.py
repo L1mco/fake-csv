@@ -28,6 +28,10 @@ class Schema(models.Model):
     def __str__(self):
         return f'{self.title}'
 
+    @property
+    def format_modified_date(self):
+        return self.modified_date.strftime("%Y-%m-%d")
+
 
 class Column(models.Model):
     """ Model for schema`s column """

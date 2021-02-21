@@ -11,6 +11,11 @@
           <div class="form-group">
             <input name="password" type="password" class="form-control" id="login_password" placeholder="Password">
           </div>
+          <div>
+            {% if request.session.error %}
+              <p class="text-danger">Username or Password not valid</p>
+            {% endif %}
+          </div>
           <button type="submit" class="btn btn-primary">Login</button>
         </form>
       </div>

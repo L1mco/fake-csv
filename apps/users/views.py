@@ -1,5 +1,6 @@
 from django.contrib.auth import authenticate, login
-from django.http import HttpResponse
+from django.shortcuts import redirect
+from django.urls import reverse
 from django.views.generic import FormView
 
 from apps.users.forms import LoginForm
@@ -16,6 +17,10 @@ class LoginView(FormView):
         )
         if user:
             login(self.request, user)
-            return HttpResponse('Authenticated successfully')
+            return redirect('generator:schema_list')
+        return redirect(reverse('users:login'))
 
-        return HttpResponse('Invalid login')
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect('generator:schema_list')
+        return super().get(request, *args, **kwargs)
