@@ -1,4 +1,4 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.views.generic import FormView
@@ -24,3 +24,8 @@ class LoginView(FormView):
         if request.user.is_authenticated:
             return redirect('generator:schema_list')
         return super().get(request, *args, **kwargs)
+
+
+def logout_view(request):
+    logout(request)
+    return redirect('users:login')

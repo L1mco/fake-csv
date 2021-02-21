@@ -6,14 +6,22 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <div class="navbar-nav">
-        <a class="nav-link active" href="#">Schemas <span class="sr-only"></span></a>
-      </div>
+      {% if request.user.is_authenticated %}
+        <div class="navbar-nav">
+          <a class="nav-link active" href="{% url 'generator:schema_list' %}">
+            Schemas <span class="sr-only"></span>
+          </a>
+        </div>
+      {% endif %}
 
     </div>
-    <span class="navbar-text mr-2">
+    {% if request.user.is_authenticated %}
+      <span class="navbar-text mr-2">
         Hello, {{ request.user.username }}
     </span>
-    <a class="btn btn-outline-secondary" href="#">Logout</a>
+      <a class="btn btn-outline-secondary" href="{% url 'users:logout' %}">Logout</a>
+    {% else %}
+      <a class="btn btn-outline-primary" href="{% url 'users:logout' %}">Login</a>
+    {% endif %}
   </nav>
 </header>
