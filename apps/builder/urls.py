@@ -1,11 +1,11 @@
 from django.urls import path
 
-from apps.generator.views import (
+from apps.builder.views import (
     SchemaListView, SchemaDetailView, SchemaInfoEditView, ColumnCreateView,
     SchemaCreateView, ColumnUpdateView
 )
 
-app_name = 'generator'
+app_name = 'builder'
 
 urlpatterns = [
     path('', SchemaListView.as_view(), name='schema_list'),

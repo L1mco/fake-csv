@@ -17,12 +17,12 @@ class LoginView(FormView):
         )
         if user:
             login(self.request, user)
-            return redirect('generator:schema_list')
+            return redirect('builder:schema_list')
         return redirect(reverse('users:login'))
 
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
-            return redirect('generator:schema_list')
+            return redirect('builder:schema_list')
         return super().get(request, *args, **kwargs)
 
 

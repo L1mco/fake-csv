@@ -1,6 +1,6 @@
 from django.forms import Form, CharField, TextInput, ChoiceField, Select
 
-from apps.generator.constants import SEPARATORS, QUOTES
+from apps.builder.constants import SEPARATORS, QUOTES
 
 
 class SchemaCreateForm(Form):

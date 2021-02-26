@@ -6,8 +6,8 @@ from django.template.loader import render_to_string
 from django.urls import reverse
 from django.views.generic import ListView, View, FormView
 
-from apps.generator.forms import SchemaCreateForm
-from apps.generator.models import Schema, Column, ColumnType
+from apps.builder.forms import SchemaCreateForm
+from apps.builder.models import Schema, Column, ColumnType
 from apps.services.fabric import ServiceClasses
 
 
@@ -23,8 +23,8 @@ class SchemaListView(AbstractLoginRequiredView, ListView):
         return Schema.objects.filter(owner=self.request.user)
 
     def delete(self, request, *args, **kwargs):
-        data = self.services.generator.parse_data(data=request.body)
-        if self.services.generator.delete_schema(data['schema_id']):
+        data = self.services.builder.parse_data(data=request.body)
+        if self.services.builder.delete_schema(data['schema_id']):
             return JsonResponse({'success': True}, status=200)
         return JsonResponse({'success': False}, status=400)
 
@@ -57,9 +57,9 @@ class SchemaInfoEditView(AbstractLoginRequiredView):
     template_name = 'pages/schema_detail.html'
 
     def post(self, request, *args, **kwargs):
-        data = self.services.generator.parse_data(data=request.body)
+        data = self.services.builder.parse_data(data=request.body)
         schema_id = data.pop('schema_id')
-        schema = self.services.generator.update_schema_info(data, schema_id)
+        schema = self.services.builder.update_schema_info(data, schema_id)
         if schema:
             return JsonResponse({'success': True}, status=200)
 
@@ -80,15 +80,15 @@ class SchemaCreateView(AbstractLoginRequiredView, FormView):
             Schema.objects.create(owner=self.request.user, **form.cleaned_data)
         )
 
-        return redirect(reverse('generator:schema_detail', args=(schema.pk,)))
+        return redirect(reverse('builder:schema_detail', args=(schema.pk,)))
 
 
 class ColumnCreateView(AbstractLoginRequiredView):
     template_name = 'components/existed_columns.html'
 
     def post(self, request, *args, **kwargs):
-        data = self.services.generator.parse_data(data=request.body)
-        column = self.services.generator.create_schema_column(data)
+        data = self.services.builder.parse_data(data=request.body)
+        column = self.services.builder.create_schema_column(data)
 
         if not column:
             return JsonResponse({'success': False}, status=400)
@@ -107,15 +107,15 @@ class ColumnCreateView(AbstractLoginRequiredView):
 
 class ColumnUpdateView(AbstractLoginRequiredView):
     def patch(self, request, *args, **kwargs):
-        data = self.services.generator.parse_data(data=request.body)
-        if self.services.generator.update_column(data):
+        data = self.services.builder.parse_data(data=request.body)
+        if self.services.builder.update_column(data):
             return JsonResponse({'success': True}, status=200)
 
         return JsonResponse({'success': False}, status=400)
 
     def delete(self, request, *args, **kwargs):
-        data = self.services.generator.parse_data(data=request.body)
-        if self.services.generator.delete_column(data['column_id']):
+        data = self.services.builder.parse_data(data=request.body)
+        if self.services.builder.delete_column(data['column_id']):
             return JsonResponse({'success': True}, status=200)
 
         return JsonResponse({'success': False}, status=400)

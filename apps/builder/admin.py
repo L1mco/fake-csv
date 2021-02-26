@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from apps.generator.models import ColumnType, Column, Schema
+from apps.builder.models import ColumnType, Column, Schema
 
 admin.site.register(Schema)
 admin.site.register(Column)

@@ -8,7 +8,7 @@
   <div class="container mt-3">
     <p class="text-danger d-none update-error-msg">Не удалось обновить! Попробуйте еще</p>
     <form class="d-flex flex-row justify-content-between schema-main-form"
-          data-target-url="{% url 'generator:schema_main_edit' %}"
+          data-target-url="{% url 'builder:schema_main_edit' %}"
           data-schema-id="{{ schema.id }}"
     >
       <div class="w-50">
@@ -69,7 +69,7 @@
         '{{ column.name }}': '{{ column.is_range }}',
       {% endfor %}
     };
-    const columnUpdateUrl = '{% url 'generator:column_update' %}';
+    const columnUpdateUrl = '{% url 'builder:column_update' %}';
   </script>
   <script src="{% static 'js/schema-detail.js' %}"></script>
 

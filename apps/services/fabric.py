@@ -1,8 +1,8 @@
-from apps.generator.services import GeneratorService
+from apps.builder.services import BuilderService
 
 
 class Services:
-    generator = GeneratorService
+    builder = BuilderService
 
 
 ServiceClasses = Services()

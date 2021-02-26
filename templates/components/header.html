@@ -8,7 +8,7 @@
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       {% if request.user.is_authenticated %}
         <div class="navbar-nav">
-          <a class="nav-link active" href="{% url 'generator:schema_list' %}">
+          <a class="nav-link active" href="{% url 'builder:schema_list' %}">
             Schemas <span class="sr-only"></span>
           </a>
         </div>

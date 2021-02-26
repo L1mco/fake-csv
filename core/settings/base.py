@@ -14,7 +14,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'apps.users',
-    'apps.generator'
+    'apps.builder'
 ]
 
 MIDDLEWARE = [
@@ -40,7 +40,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'apps.generator.context_processors.common_data_context'
+                'apps.builder.context_processors.common_data_context'
             ],
         },
     },

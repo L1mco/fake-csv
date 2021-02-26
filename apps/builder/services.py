@@ -1,12 +1,12 @@
 from django.db import DataError
 from django.db.models import Prefetch
 
-from apps.generator.models import Schema, Column, ColumnType
+from apps.builder.models import Schema, Column, ColumnType
 from apps.services.base import BaseQueryService
 
 
-class GeneratorService(BaseQueryService):
-    """ Service Class for schema generator """
+class BuilderService(BaseQueryService):
+    """ Service Class for schema builder """
     schema_model = Schema
     column_model = Column
 

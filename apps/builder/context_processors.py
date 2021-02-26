@@ -1,4 +1,4 @@
-from apps.generator.constants import SEPARATORS, QUOTES
+from apps.builder.constants import SEPARATORS, QUOTES
 
 
 def common_data_context(request):
