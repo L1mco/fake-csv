@@ -1,0 +1,56 @@
+<div class="row mt-2 schema_column_row d-flex justify-content-between"
+     data-column-id="{{ column.id }}">
+  <div class="col-4">
+    <label for="column_name_{{ column.id }}">Column name</label>
+    <input type="text"
+           data-field="name"
+           class="form-control column_input"
+           id="column_name_{{ column.id }}"
+           value="{{ column.name }}">
+  </div>
+  <div class="col-2">
+    <label for="column_type_{{ column.id }}">Type</label>
+    <select id="column_type_{{ column.id }}"
+            data-field="type"
+            class="form-control column_input column_type_select">
+      {% for column_type in column_types %}
+        <option class="schema_quote_option"
+                {% if column_type == column.type %}selected{% endif %}>
+          {{ column_type }}
+        </option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="col-2" data-column-id="{{ column.id }}">
+    <div class="{% if column.range_from %}d-block{% else %}d-none{% endif %} column_range">
+      <label for="range_from_{{ column.id }}">From</label>
+      <input type="number"
+             data-field="range_from"
+             class="form-control column_input"
+             id="range_from_{{ column.id }}"
+             value="{{ column.range_from }}">
+    </div>
+  </div>
+  <div class="col-2" data-column-id="{{ column.id }}">
+    <div class="{% if column.range_to %}d-block{% else %}d-none{% endif %} column_range">
+      <label for="range_to_{{ column.id }}">To</label>
+      <input type="number"
+             data-field="range_to"
+             class="form-control column_input"
+             id="range_to_{{ column.id }}"
+             value="{{ column.range_to }}">
+    </div>
+  </div>
+  <div class="col-2" data-column-id="{{ column.id }}">
+    <label for="column_order_{{ column.id }}">Order</label>
+    <div class="d-flex flex-row">
+      <input min="0"
+             type="number"
+             data-field="order"
+             class="form-control column_input"
+             id="column_order_{{ column.id }}"
+             value="{{ column.order }}">
+      <button class="btn btn-link text-danger delete_column_btn">Delete</button>
+    </div>
+  </div>
+</div>

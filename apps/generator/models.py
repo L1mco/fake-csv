@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 from django.db import models
 
 from apps.generator.constants import SEPARATORS, QUOTES
@@ -43,6 +44,12 @@ class Column(models.Model):
     type = models.ForeignKey(
         'ColumnType', on_delete=models.PROTECT, verbose_name='Type'
     )
+    range_from = models.IntegerField(
+        blank=True, null=True, default=0, verbose_name='From'
+    )
+    range_to = models.IntegerField(
+        blank=True, null=True, default=0, verbose_name='To'
+    )
     order = models.IntegerField(verbose_name='Order')
 
     class Meta:
@@ -52,12 +59,35 @@ class Column(models.Model):
     def __str__(self):
         return f'{self.name} - {self.type}'
 
+    def save(self, *args, **kwargs):
+        if not self.type.is_range:
+            self.range_from = None
+            self.range_to = None
+
+        super().save(*args, **kwargs)
+
+    def clean(self):
+        """
+        Validate 'order', 'schema'  are unique together
+        """
+        order_not_unique_in_schema = (
+            self.__class__.objects
+            .filter(order=self.order, schema=self.schema)
+            .exclude(id=self.id)
+            .exists()
+        )
+
+        if order_not_unique_in_schema:
+            raise ValidationError(
+                'Selected order is not unique in this schema',
+                code='unique_together',
+            )
+
 
 class ColumnType(models.Model):
     """ Model for column`s type """
     name = models.CharField(max_length=80, verbose_name='Name')
-    range_from = models.IntegerField(blank=True, null=True, verbose_name='From')
-    range_to = models.IntegerField(blank=True, null=True, verbose_name='From')
+    is_range = models.BooleanField(default=False, verbose_name='Range?')
 
     class Meta:
         verbose_name = 'Column type'

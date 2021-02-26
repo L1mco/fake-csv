@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+  <h1>
+
+  </h1>
+  <div class="container mt-3">
+    <p class="text-danger d-none update-error-msg">Не удалось обновить! Попробуйте еще</p>
+    <form class="d-flex flex-row justify-content-between schema-main-form"
+          data-target-url="{% url 'generator:schema_main_edit' %}"
+          data-schema-id="{{ schema.id }}"
+    >
+      <div class="w-50">
+        <div class="form-group">
+          <label for="schema_title">Title</label>
+          <input type="text" class="form-control" id="schema_title"
+                 value="{% if schema.title %}{{ schema.title }}{% endif %}">
+        </div>
+        <div class="form-group">
+          <label for="schema_separator">Column Separator</label>
+          <select id="schema_separator" class="form-control">
+            {% for separator in SEPARATORS %}
+              <option class="schema_separator_option"
+                      {% if separator == schema.separator %}selected{% endif %}>
+                {{ separator }}
+              </option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="schema_quote">String character</label>
+          <select id="schema_quote" class="form-control">
+            {% for quote in QUOTES %}
+              <option class="schema_quote_option"
+                      {% if quote == schema.quote %}selected{% endif %}>
+                {{ quote }}
+              </option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+      <div>
+        <button type="submit" class="btn btn-primary">
+          Submit
+        </button>
+      </div>
+    </form>
+  </div>
+  <div class="container mt-2 p-1">
+    <h3 class="mb-3">Schema columns</h3>
+    <div class="schema_columns_container">
+      {% for column in schema.columns.all %}
+          {% include 'components/existed_columns.html' %}
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="container mt-3 p-3 border border-secondary rounded-sm">
+    {% include 'components/new_column_form.html' %}
+  </div>
+{% endblock %}
+
+{% block extra_js %}
+  <script>
+    const schemaId = {{ schema.id }};
+    const columnTypes = {
+      {% for column in column_types %}
+        '{{ column.name }}': '{{ column.is_range }}',
+      {% endfor %}
+    };
+    const columnUpdateUrl = '{% url 'generator:column_update' %}';
+  </script>
+  <script src="{% static 'js/schema-detail.js' %}"></script>
+
+{% endblock %}
+
+
