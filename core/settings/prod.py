@@ -13,7 +13,10 @@ DATABASES = {
         'NAME': os.environ['DB_NAME'],
         'USER': os.environ['DB_USER'],
         'PASSWORD': os.environ['USER_PASSWORD'],
-        'HOST': 'localhost',
+        'HOST': os.environ['DB_HOST'],
         'PORT': 5432,
     }
 }
+
+BROKER_URL = os.environ['BROKER_URL']
+CELERY_RESULT_BACKEND = os.environ['CELERY_RESULT_BACKEND']
