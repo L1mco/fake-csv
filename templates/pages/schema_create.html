@@ -1,9 +1,12 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block title %}
+  Schema create
+{% endblock %}
 
 {% block content %}
   <div class="container mt-3">
-    <p class="text-danger d-none update-error-msg">Не удалось обновить! Попробуйте еще</p>
+    <p class="text-danger d-none update-error-msg">Failed to update! Try again!</p>
     <form class="d-flex flex-row justify-content-between schema-main-form"
           action="{% url 'builder:schema_create' %}" method="post" id="schema_create_form"
     >
