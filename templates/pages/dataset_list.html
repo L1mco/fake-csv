@@ -36,7 +36,7 @@
               {% endif %}
             </td>
             <td>
-              {% if dataset.file %}
+              {% if dataset.file and dataset.ready  %}
                 <a href="{{ dataset.file.url }}" download>Download</a>
               {% endif %}
             </td>

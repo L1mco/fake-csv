@@ -1,3 +1,5 @@
+from django.http import JsonResponse
+from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 from django.views.generic import FormView
 
@@ -25,6 +27,14 @@ class DataSetListView(AbstractLoginRequiredView, FormView):
             Schema.objects.filter(owner=user)
         )
         return context
+
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class=self.form_class)
+        form.fields['schema'].queryset = (
+            Schema.objects.filter(owner=self.request.user)
+        )
+
+        return form
 
     def form_valid(self, form):
         self.services.generator.create_dataset(form.cleaned_data)

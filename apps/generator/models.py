@@ -1,4 +1,6 @@
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 from apps.builder.models import Schema
 from utils.upload_dataset import upload_instance
@@ -26,3 +28,10 @@ class DataSet(models.Model):
     @property
     def format_created_date(self):
         return self.created_date.strftime("%Y-%m-%d")
+
+
+@receiver(post_save, sender=DataSet)
+def generate_trigger(instance, created, **kwargs):
+    from apps.generator.tasks import generate_dataset_data
+    if created:
+        generate_dataset_data.delay(instance.id)
