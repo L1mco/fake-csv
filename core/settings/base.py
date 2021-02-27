@@ -1,6 +1,5 @@
 import logging
 import os
-from pathlib import Path
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname((os.path.abspath(__file__)))))
 
@@ -15,6 +14,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'apps.users',
+    'apps.builder',
+    'apps.generator',
 ]
 
 MIDDLEWARE = [
@@ -40,6 +41,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'apps.builder.context_processors.common_data_context'
             ],
         },
     },
@@ -85,6 +87,21 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'templates', 'assets'),
+)
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+LOGIN_URL = 'users:login'
+
+BROKER_URL = 'redis://localhost:6379'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/1'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
 
 
 try:

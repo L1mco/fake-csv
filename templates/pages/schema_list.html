@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col">
+        <h3>Data schemas</h3>
+      </div>
+      <div class="col d-flex justify-content-end">
+        <a class="btn btn-outline-success" href="{% url 'builder:schema_create' %}">New Schema</a>
+      </div>
+    </div>
+    <div class="row mt-2">
+      <table class="table table-bordered">
+        <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Title</th>
+          <th scope="col">Modified</th>
+          <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for schema in schemas %}
+          <tr>
+            <th scope="row" class="table_row_number"></th>
+            <td><a href="{% url 'builder:schema_detail' schema.id %}">{{ schema.title }}</a></td>
+            <td>{{ schema.format_modified_date }}</td>
+            <td class="d-flex justify-content-around">
+              <button class="btn btn-link" data-schema-id="{{ schema.id }}">
+                <a href="{% url 'builder:schema_detail' schema.id %}">
+                  Edit scheme
+                </a>
+              </button>
+              <button class="btn btn-link text-danger schema_delete_btn"
+                      data-target-url="{% url 'builder:schema_list' %}"
+                      data-schema-id="{{ schema.id }}">
+                Delete
+              </button>
+            </td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+{% endblock %}
+
+{% block extra_js %}
+  <script src="{% static 'js/schema-list.js' %}"></script>
+
+{% endblock %}

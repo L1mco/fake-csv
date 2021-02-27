@@ -1,0 +1,14 @@
+<th scope="row" class="table_row_number"></th>
+<td>{{ dataset.format_created_date }}</td>
+<td>
+  {% if dataset.ready %}
+    <span class="badge badge-success">Ready</span>
+  {% else %}
+    <span class="badge badge-secondary">Processing</span>
+  {% endif %}
+</td>
+<td>
+  {% if dataset.file and dataset.ready %}
+    <a href="{{ dataset.file.url }}" download>Download</a>
+  {% endif %}
+</td>

@@ -1,0 +1,45 @@
+<form class="new_column_form" data-target-url="{% url 'builder:column_create' %}">
+  <div class="row new_schema_column_row d-flex justify-content-between">
+    <div class="col-4">
+      <label for="new_column_name">Column name</label>
+      <input type="text"
+             class="form-control"
+             id="new_column_name" required>
+    </div>
+    <div class="col-2">
+      <label for="new_column_type">Type</label>
+      <select id="new_column_type" class="form-control" required>
+        {% for column_type in column_types %}
+          <option class="schema_quote_option">
+            {{ column_type }}
+          </option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-2">
+      <div class="d-none new_column_range">
+        <label for="new_range_from">From</label>
+        <input type="number" class="form-control" id="new_range_from">
+      </div>
+    </div>
+    <div class="col-2">
+      <div class="d-none new_column_range">
+        <label for="new_range_to">To</label>
+        <input type="number" class="form-control" id="new_range_to">
+      </div>
+    </div>
+    <div class="col-2">
+      <label for="new_column_order">Order</label>
+      <div class="d-flex flex-row">
+        <input min="0"
+               type="number"
+               value="1"
+               class="form-control"
+               id="new_column_order" required>
+      </div>
+    </div>
+  </div>
+  <div class="mt-3">
+    <button class="btn btn-primary add_column_btn">Add column</button>
+  </div>
+</form>
