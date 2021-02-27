@@ -24,7 +24,7 @@
         <tbody>
         {% for schema in schemas %}
           <tr>
-            <th scope="row" class="schemas-table-row-number"></th>
+            <th scope="row" class="table_row_number"></th>
             <td><a href="{% url 'builder:schema_detail' schema.id %}">{{ schema.title }}</a></td>
             <td>{{ schema.format_modified_date }}</td>
             <td class="d-flex justify-content-around">
@@ -46,14 +46,9 @@
     </div>
   </div>
 
-  <script>
-    let tableRows = document.querySelectorAll('.schemas-table-row-number');
-    let index = 1
-    for (let row of tableRows) {
-      row.textContent = `${index}`
-      index++
-    }
-  </script>
+{% endblock %}
+
+{% block extra_js %}
   <script src="{% static 'js/schema-list.js' %}"></script>
 
 {% endblock %}

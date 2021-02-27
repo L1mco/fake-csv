@@ -1,5 +1,4 @@
 from django.db import DataError
-from django.db.models import Prefetch
 
 from apps.builder.models import Schema, Column, ColumnType
 from apps.services.base import BaseQueryService

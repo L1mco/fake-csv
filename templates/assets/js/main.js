@@ -6,7 +6,14 @@ const getCookie = (name) => {
 };
 
 const stringToHTML = (str) => {
-	const parser = new DOMParser();
-	const doc = parser.parseFromString(str, 'text/html');
-	return doc.body;
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(str, 'text/html');
+  return doc.body;
 };
+
+const tableRows = document.querySelectorAll('.table_row_number');
+let index = 1
+for (let row of tableRows) {
+  row.textContent = `${index}`
+  index++
+}

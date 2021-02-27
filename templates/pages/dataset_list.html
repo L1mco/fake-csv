@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col">
+        <h3>Data sets</h3>
+      </div>
+      <div class="col d-flex justify-content-end">
+        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#generate_data_modal">
+          Generate data
+        </button>
+      </div>
+    </div>
+    <div class="row mt-2">
+      <table class="table table-bordered">
+        <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Created</th>
+          <th scope="col">Status</th>
+          <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for dataset in datasets %}
+          <tr>
+            <th scope="row" class="table_row_number"></th>
+            <td>{{ dataset.format_created_date }}</td>
+            <td>
+              {% if dataset.ready %}
+                <span class="badge badge-success">Ready</span>
+              {% else %}
+                <span class="badge badge-secondary">Processing</span>
+              {% endif %}
+            </td>
+            <td>
+              {% if dataset.file %}
+                <a href="{{ dataset.file.url }}" download>Download</a>
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {% include 'components/gererate_data_modal.html' %}
+{% endblock %}
+
+{% block extra_js %}
+
+{% endblock %}
