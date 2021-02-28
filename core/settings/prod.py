@@ -1,6 +1,5 @@
 import os
 
-
 SECRET_KEY = os.environ['SECRET_KEY']
 
 DEBUG = os.environ['DEBUG']
@@ -31,3 +30,8 @@ AWS_S3_REGION_NAME = os.environ['AWS_S3_REGION_NAME']
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 AWS_QUERYSTRING_AUTH = False
+
+AWS_URL = os.environ['AWS_URL']
+
+STATIC_URL = AWS_URL + '/static/'
+MEDIA_URL = AWS_URL + '/media/'
