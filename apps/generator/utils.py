@@ -1,10 +1,10 @@
 import csv
 import os
 
+from django.core.files import File
 from faker import Faker
 
 from apps.generator.services import GeneratorService
-from utils.upload_dataset import upload_instance
 
 service = GeneratorService
 
@@ -20,15 +20,9 @@ def generate_data(dataset_id):
         f'{dataset_instance.id}-'
         f'{dataset_instance.rows}.csv'
     )
+    buff_file_path = f'buff-{filename}'
 
-    path = upload_instance(dataset_instance, filename)
-    dataset_instance.file.name = path
-    dataset_instance.save(update_fields=['file'])
-    csv_file_path = dataset_instance.file.path
-
-    os.makedirs(os.path.dirname(csv_file_path), exist_ok=True)
-
-    with open(csv_file_path, 'at') as csvFile:
+    with open(buff_file_path, 'w', ) as csvFile:
         writer = csv.DictWriter(
             csvFile, fieldnames=headers, delimiter=separator, quotechar=quote
         )
@@ -42,6 +36,11 @@ def generate_data(dataset_id):
                 dataset[headers[j]] = value
 
             writer.writerow(dataset)
+
+    # FOR CORRECT SAVE TO S3
+    dataset_instance.file.save(filename, File(open(buff_file_path, 'rb')))
+    os.remove(buff_file_path)
+
     dataset_instance.ready = True
     dataset_instance.save(update_fields=['ready'])
 
