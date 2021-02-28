@@ -39,7 +39,8 @@ def generate_data(dataset_id):
 
     # FOR CORRECT SAVE TO S3
     dataset_instance.file.save(filename, File(open(buff_file_path, 'rb')))
-    os.remove(buff_file_path)
+
+    # os.remove(buff_file_path)
 
     dataset_instance.ready = True
     dataset_instance.save(update_fields=['ready'])
