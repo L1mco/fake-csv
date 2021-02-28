@@ -13,7 +13,8 @@ def generate_data(dataset_id):
     dataset_instance = service.get_dataset_by_id(dataset_id)
     headers = service.get_dataset_headers(dataset_instance)
     row_types = service.get_column_types(dataset_instance)
-
+    schema = dataset_instance.schema
+    separator, quote = schema.separator[-2], schema.quote[-2]
     filename = (
         f'{dataset_instance.schema.title}-'
         f'{dataset_instance.id}-'
@@ -28,7 +29,9 @@ def generate_data(dataset_id):
     os.makedirs(os.path.dirname(csv_file_path), exist_ok=True)
 
     with open(csv_file_path, 'at') as csvFile:
-        writer = csv.DictWriter(csvFile, fieldnames=headers)
+        writer = csv.DictWriter(
+            csvFile, fieldnames=headers, delimiter=separator, quotechar=quote
+        )
         writer.writeheader()
 
         for i in range(dataset_instance.rows):
