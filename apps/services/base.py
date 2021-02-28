@@ -14,6 +14,6 @@ class BaseQueryService(ABC):
 
     @staticmethod
     def get_html_template(request, tmp_name, data):
-        return render_to_string(template_name=tmp_name,
-                                context=data,
-                                request=request)
+        return render_to_string(
+            template_name=tmp_name, context=data, request=request
+        )

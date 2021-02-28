@@ -47,17 +47,20 @@ def generate_data(dataset_id):
 
 
 def generate_row(header, row_type):
-    row = {
-        f'{header}': get_data_type_content(row_type['name'], row_type['from'], row_type['to'])
+    return {
+        f'{header}': get_data_type_content(
+            row_type['name'], row_type['from'], row_type['to']
+        )
     }
-    return row
 
 
 def get_data_type_content(name, range_from=None, range_to=None):
     fake = Faker('en_US')
+
     if not range_to and not range_to:
-        range_to = 15
         range_from = 10
+        range_to = 15
+
     format_name = name.lower().replace(' ', '_')
     fake_types = dict(
         date=fake.date(),
@@ -68,7 +71,9 @@ def get_data_type_content(name, range_from=None, range_to=None):
         company_name=fake.company(),
         job=fake.job(),
         integer=fake.pyint(min_value=range_from, max_value=range_to),
-        text=fake.sentence(nb_words=(fake.pyint(min_value=range_from, max_value=range_to)))
+        text=fake.sentence(
+            nb_words=(fake.pyint(min_value=range_from, max_value=range_to))
+        )
     )
 
-    return fake_types.get(format_name)
+    return fake_types.get(format_name, default=fake.sentence())

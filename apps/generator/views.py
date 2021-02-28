@@ -26,6 +26,7 @@ class DataSetListView(AbstractLoginRequiredView, FormView):
         context['schemas'] = (
             Schema.objects.filter(owner=user)
         )
+
         return context
 
     def get_form(self, form_class=None):
@@ -38,4 +39,5 @@ class DataSetListView(AbstractLoginRequiredView, FormView):
 
     def form_valid(self, form):
         self.services.generator.create_dataset(form.cleaned_data)
+
         return super(DataSetListView, self).form_valid(form)

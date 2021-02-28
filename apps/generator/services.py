@@ -18,6 +18,7 @@ class GeneratorService(BaseQueryService):
     def get_dataset_headers(cls, dataset):
         schema = dataset.schema
         columns = schema.columns.order_by('order')
+
         return list(column.name for column in columns)
 
     @classmethod
